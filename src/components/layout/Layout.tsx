@@ -16,9 +16,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         sx={{
           flexGrow: 1,
           p: 3,
-          mt: 8,
           backgroundColor: "#ffffff",
-          overflow: "auto",
+          overflowY: "auto",
+          height: "100vh",
         }}
       >
         <Container maxWidth="lg" sx={{ py: 2 }}>

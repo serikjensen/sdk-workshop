@@ -26,6 +26,8 @@ import {
   Business as BusinessIcon,
 } from "@mui/icons-material";
 import { Badge, Button, Menu, MenuItem } from "../design-system";
+import { Employee } from "@gusto/embedded-react-sdk";
+import withGustoProvider from "../hoc/withGustoProvider";
 
 // Function to determine color based on priority
 const getPriorityColor = (priority: string) => {
@@ -107,7 +109,7 @@ const getEventTypeBadge = (type: string) => {
   return null;
 };
 
-const Dashboard: React.FC = () => {
+const DashboardComponent: React.FC = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [eventMenuAnchorEl, setEventMenuAnchorEl] =
     useState<null | HTMLElement>(null);
@@ -130,9 +132,42 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Dashboard
-      </Typography>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Dashboard
+        </Typography>
+      </Box>
+
+      {/* <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 3,
+          mb: 4,
+        }}
+      >
+        <Paper
+          elevation={0}
+          sx={{
+            flex: 2,
+            p: 3,
+            border: "1px solid",
+            borderColor: "divider",
+            height: "100%",
+          }}
+        >
+          <Employee.EmployeeList
+            companyId="demo"
+            onEvent={(evt, data) => {
+              console.log("Employee Onboarding Event:", evt, data);
+            }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <Employee.EmployeeList.List />
+            </Box>
+          </Employee.EmployeeList>
+        </Paper>
+      </Box> */}
 
       <Box
         sx={{
@@ -443,5 +478,7 @@ const Dashboard: React.FC = () => {
     </Container>
   );
 };
+
+export const Dashboard = withGustoProvider(DashboardComponent);
 
 export default Dashboard;

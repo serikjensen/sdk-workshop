@@ -1,19 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
-import Layout from "./components/layout/Layout";
 import { theme } from "./design-system";
 
-// Pages
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
-
-// Demo Pages
-import DirectDepositDemo from "./pages/demos/DirectDepositDemo";
-import PayStatementsDemo from "./pages/demos/PayStatementsDemo";
-import PayrollFormsDemo from "./pages/demos/PayrollFormsDemo";
-import TaxCalculatorDemo from "./pages/demos/TaxCalculatorDemo";
-import MenuDemo from "./pages/demos/MenuDemo";
-import ButtonDemo from "./pages/demos/ButtonDemo";
+import Flows from "./pages/demos/Flows";
+import Composition from "./pages/demos/Composition";
+import Copy from "./pages/demos/Copy";
+import Theming from "./pages/demos/Theming";
+import Events from "./pages/demos/Events";
+import Layout from "./components/layout/Layout";
 
 function App() {
   return (
@@ -23,25 +19,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
-
-            {/* Demo Routes */}
-            <Route
-              path="/demo/direct-deposit"
-              element={<DirectDepositDemo />}
-            />
-            <Route
-              path="/demo/pay-statements"
-              element={<PayStatementsDemo />}
-            />
-            <Route path="/demo/payroll-forms" element={<PayrollFormsDemo />} />
-            <Route
-              path="/demo/tax-calculator"
-              element={<TaxCalculatorDemo />}
-            />
-            <Route path="/demo/menu" element={<MenuDemo />} />
-            <Route path="/demo/button" element={<ButtonDemo />} />
-
-            {/* Fallback route */}
+            <Route path="/flows" element={<Flows />} />
+            <Route path="/composition/*" element={<Composition />} />
+            <Route path="/copy" element={<Copy />} />
+            <Route path="/theming" element={<Theming />} />
+            <Route path="/events" element={<Events />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>

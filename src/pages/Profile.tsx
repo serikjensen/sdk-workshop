@@ -47,8 +47,9 @@ import {
 } from "@mui/icons-material";
 import { blue } from "@mui/material/colors";
 import { Badge, Menu, MenuItem as DsMenuItem, Button } from "../design-system";
+import withGustoProvider from "../hoc/withGustoProvider";
 
-const Profile: React.FC = () => {
+const ProfileComponent: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] =
@@ -563,5 +564,7 @@ const Profile: React.FC = () => {
     </Box>
   );
 };
+
+export const Profile = withGustoProvider(ProfileComponent);
 
 export default Profile;

@@ -6,50 +6,44 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Divider,
   useTheme,
 } from "@mui/material";
 import {
   Dashboard as DashboardIcon,
   Person as ProfileIcon,
   Construction as ComponentsIcon,
-  Menu as MenuIcon,
 } from "@mui/icons-material";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import DemoLogo from "../../assets/DemoLogo";
 
-const SIDEBAR_WIDTH = 240;
+const SIDEBAR_WIDTH = 200;
 
 const menuItems = [
   { text: "Dashboard", icon: <DashboardIcon />, path: "/" },
   { text: "Profile", icon: <ProfileIcon />, path: "/profile" },
 ];
 
-const demoItems = [
+const demos = [
+  { text: "Flows", icon: <ComponentsIcon />, path: "/flows" },
   {
-    text: "Direct Deposit",
+    text: "Composition",
     icon: <ComponentsIcon />,
-    path: "/demo/direct-deposit",
+    path: "/composition",
   },
   {
-    text: "Pay Statements",
+    text: "Copy",
     icon: <ComponentsIcon />,
-    path: "/demo/pay-statements",
+    path: "/copy",
   },
   {
-    text: "Payroll Forms",
+    text: "Events",
     icon: <ComponentsIcon />,
-    path: "/demo/payroll-forms",
+    path: "/events",
   },
   {
-    text: "Tax Calculator",
+    text: "Theming",
     icon: <ComponentsIcon />,
-    path: "/demo/tax-calculator",
-  },
-  {
-    text: "Menu Component",
-    icon: <MenuIcon />,
-    path: "/demo/menu",
+    path: "/theming",
   },
 ];
 
@@ -86,7 +80,7 @@ const Sidebar: React.FC = () => {
         </Link>
       </Box>
       <Box sx={{ overflow: "auto", mt: 4, flexGrow: 1 }}>
-        <List>
+        <List disablePadding>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
@@ -104,11 +98,15 @@ const Sidebar: React.FC = () => {
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                   },
                   color: "#ffffff",
+                  px: 1,
+                  outline: "none",
+                  border: "none",
                 }}
               >
                 <ListItemIcon
                   sx={{
                     color: "#ffffff",
+                    minWidth: 40,
                   }}
                 >
                   {item.icon}
@@ -118,46 +116,34 @@ const Sidebar: React.FC = () => {
             </ListItem>
           ))}
         </List>
-
-        <Divider sx={{ my: 2, backgroundColor: "rgba(255, 255, 255, 0.2)" }} />
-
-        <List
-          subheader={
-            <Box
-              sx={{
-                px: 2,
-                py: 1,
-                typography: "subtitle2",
-                color: "rgba(255, 255, 255, 0.7)",
-                fontWeight: "bold",
-              }}
-            >
-              SDK DEMOS
-            </Box>
-          }
-        >
-          {demoItems.map((item) => (
+        <hr />
+        <List disablePadding>
+          {demos.map((item) => (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
                 selected={location.pathname === item.path}
                 onClick={() => navigate(item.path)}
                 sx={{
                   "&.Mui-selected": {
-                    backgroundColor: theme.palette.secondary.dark,
+                    backgroundColor: theme.palette.primary.main,
                     color: "#ffffff",
                     "&:hover": {
-                      backgroundColor: theme.palette.secondary.dark,
+                      backgroundColor: theme.palette.primary.main,
                     },
                   },
                   "&:hover": {
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                   },
                   color: "#ffffff",
+                  px: 1,
+                  outline: "none",
+                  border: "none",
                 }}
               >
                 <ListItemIcon
                   sx={{
                     color: "#ffffff",
+                    minWidth: 40,
                   }}
                 >
                   {item.icon}
