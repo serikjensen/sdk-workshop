@@ -9,7 +9,7 @@ export interface BadgeProps extends BaseComponentProps {
   /**
    * The label text to display inside the badge
    */
-  label: string;
+  label: React.ReactNode;
 
   /**
    * The status variant that determines the badge color

@@ -1,5 +1,5 @@
 import React from "react";
-import { GustoApiProvider } from "@gusto/embedded-react-sdk";
+import { GustoProvider } from "@gusto/embedded-react-sdk";
 import "@gusto/embedded-react-sdk/style.css";
 
 export const withGustoProvider = <P extends object>(
@@ -7,9 +7,9 @@ export const withGustoProvider = <P extends object>(
 ): React.FC<P> => {
   const WithGustoProvider: React.FC<P> = (props) => {
     return (
-      <GustoApiProvider config={{ baseUrl: "https://sdkdemo.gusto.com" }}>
+      <GustoProvider config={{ baseUrl: "https://sdkdemo.gusto.com" }}>
         <Component {...props} />
-      </GustoApiProvider>
+      </GustoProvider>
     );
   };
 

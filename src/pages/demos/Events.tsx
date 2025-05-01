@@ -1,12 +1,32 @@
 import React from "react";
+import { Employee } from "@gusto/embedded-react-sdk";
+import withGustoProvider from "../../hoc/withGustoProvider";
 
-const Events: React.FC = () => {
+const EventsComponent: React.FC = () => {
   return (
-    <div>
-      <h1>Hello World</h1>
-      <p>This is the Events demo page.</p>
-    </div>
+    <Employee.Profile
+      companyId="123"
+      onEvent={(eventType, eventData) => {
+        console.log(eventType, eventData);
+      }}
+      defaultValues={{
+        employee: {
+          firstName: "Sarah",
+          lastName: "Smith",
+          email: "sarah.smith@example.com",
+          dateOfBirth: "1990-01-01",
+        },
+        homeAddress: {
+          street1: "123 Main St",
+          city: "Anytown",
+          state: "CA",
+          zip: "12345",
+        },
+      }}
+    />
   );
 };
+
+const Events = withGustoProvider(EventsComponent);
 
 export default Events;

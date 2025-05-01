@@ -6,7 +6,6 @@ import {
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
   MenuItem,
-  SelectChangeEvent,
 } from "@mui/material";
 import { BaseComponentProps, FieldVariant, SizeVariant } from "../types";
 import { mergeSx } from "../../utils/styleUtils";
@@ -18,7 +17,7 @@ export type SelectOption = {
 
 export interface SelectProps
   extends BaseComponentProps,
-    Omit<MuiSelectProps, "variant" | "size"> {
+    Omit<MuiSelectProps<string>, "variant" | "size"> {
   /**
    * Input label
    */
@@ -50,14 +49,6 @@ export interface SelectProps
    * @default 'medium'
    */
   size?: SizeVariant;
-
-  /**
-   * Callback fired when the value changes
-   */
-  onChange?: (
-    event: SelectChangeEvent<unknown>,
-    child: React.ReactNode
-  ) => void;
 }
 
 /**
@@ -87,6 +78,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     // Custom styling for our select
     const customSx = {
       minWidth: 120,
+      width: "100%",
       "& .MuiOutlinedInput-root": {
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
           borderWidth: 2,
@@ -105,10 +97,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         sx={mergeSx(customSx, sx)}
       >
         {label && <InputLabel id={labelId}>{label}</InputLabel>}
-        <MuiSelect labelId={labelId} label={label} {...props}>
+        <MuiSelect<string> labelId={labelId} label={label} {...props}>
           {children ||
             options.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option.value} value={String(option.value)}>
                 {option.label}
               </MenuItem>
             ))}

@@ -11,7 +11,8 @@ import {
 import {
   Dashboard as DashboardIcon,
   Person as ProfileIcon,
-  Construction as ComponentsIcon,
+  Feedback as FeedbackIcon,
+  FiberManualRecord as DotIcon,
 } from "@mui/icons-material";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import DemoLogo from "../../assets/DemoLogo";
@@ -21,29 +22,35 @@ const SIDEBAR_WIDTH = 200;
 const menuItems = [
   { text: "Dashboard", icon: <DashboardIcon />, path: "/" },
   { text: "Profile", icon: <ProfileIcon />, path: "/profile" },
+  { text: "Feedback", icon: <FeedbackIcon />, path: "/feedback" },
 ];
 
 const demos = [
-  { text: "Flows", icon: <ComponentsIcon />, path: "/flows" },
+  { text: "Flows", icon: <DotIcon sx={{ fontSize: 8 }} />, path: "/flows" },
   {
     text: "Composition",
-    icon: <ComponentsIcon />,
+    icon: <DotIcon sx={{ fontSize: 8 }} />,
     path: "/composition",
   },
   {
     text: "Copy",
-    icon: <ComponentsIcon />,
+    icon: <DotIcon sx={{ fontSize: 8 }} />,
     path: "/copy",
   },
   {
     text: "Events",
-    icon: <ComponentsIcon />,
+    icon: <DotIcon sx={{ fontSize: 8 }} />,
     path: "/events",
   },
   {
     text: "Theming",
-    icon: <ComponentsIcon />,
+    icon: <DotIcon sx={{ fontSize: 8 }} />,
     path: "/theming",
+  },
+  {
+    text: "Adapter",
+    icon: <DotIcon sx={{ fontSize: 8 }} />,
+    path: "/adapter",
   },
 ];
 

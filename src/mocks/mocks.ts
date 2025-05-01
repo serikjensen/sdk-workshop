@@ -534,6 +534,7 @@ export const getCompanyEmployees = (companyId?: string) =>
           uuid: "3",
           onboarding_status: "onboarding_completed",
           payment_method: "Direct Deposit",
+          onboarded: true,
         },
         {
           first_name: "Leah",
@@ -541,6 +542,7 @@ export const getCompanyEmployees = (companyId?: string) =>
           uuid: "4",
           onboarding_status: "onboarding_completed",
           payment_method: "Direct Deposit",
+          onboarded: true,
         },
         {
           first_name: "Charlie",
@@ -548,6 +550,7 @@ export const getCompanyEmployees = (companyId?: string) =>
           uuid: "40s",
           onboarding_status: "onboarding_completed",
           payment_method: "Direct Deposit",
+          onboarded: true,
         },
         {
           first_name: "Sean",
@@ -555,6 +558,7 @@ export const getCompanyEmployees = (companyId?: string) =>
           uuid: "5",
           onboarding_status: "onboarding_completed",
           payment_method: "Direct Deposit",
+          onboarded: true,
         },
         {
           first_name: "Aaron",
@@ -562,6 +566,7 @@ export const getCompanyEmployees = (companyId?: string) =>
           uuid: "6",
           onboarding_status: "onboarding_completed",
           payment_method: "Direct Deposit",
+          onboarded: true,
         },
         {
           first_name: "Steve",
@@ -569,6 +574,7 @@ export const getCompanyEmployees = (companyId?: string) =>
           uuid: "7",
           onboarding_status: "onboarding_completed",
           payment_method: "Direct Deposit",
+          onboarded: true,
         },
         {
           first_name: "Jeffrey",
@@ -576,6 +582,7 @@ export const getCompanyEmployees = (companyId?: string) =>
           uuid: "8",
           onboarding_status: "onboarding_completed",
           payment_method: "Direct Deposit",
+          onboarded: true,
         },
       ]),
     companyId

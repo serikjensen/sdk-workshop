@@ -1,9 +1,9 @@
 import React from "react";
-import { Employee, GustoApiProvider } from "@gusto/embedded-react-sdk";
+import { Employee, GustoProvider } from "@gusto/embedded-react-sdk";
 
 const Copy: React.FC = () => {
   return (
-    <GustoApiProvider
+    <GustoProvider
       config={{ baseUrl: "https://sdkdemo.gusto.com" }}
       // dictionary={{
       //   en: {
@@ -23,7 +23,7 @@ const Copy: React.FC = () => {
           console.log(eventType, eventData);
         }}
       />
-    </GustoApiProvider>
+    </GustoProvider>
   );
 };
 
