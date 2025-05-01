@@ -625,12 +625,26 @@ function Link(props: LinkProps) {
   return <MuiLink {...props} />;
 }
 
-function Card({ children, menu, className }: CardProps) {
+function Card({ children, menu }: CardProps) {
   return (
-    <div className={`card ${className || ""}`}>
-      <div className="card-content">
-        <div className="card-main">{children}</div>
-        {menu && <div className="card-menu">{menu}</div>}
+    <div
+      style={{
+        border: "1px solid #EAEAEA",
+        borderRadius: "0.5rem",
+        marginBottom: "1rem",
+        padding: "1rem",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "0.5rem",
+          width: "100%",
+        }}
+      >
+        <div style={{ width: "100%" }}>{children}</div>
+        {menu && <div>{menu}</div>}
       </div>
     </div>
   );

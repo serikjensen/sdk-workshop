@@ -4,7 +4,7 @@ import withGustoProvider from "../../hoc/withGustoProvider";
 
 const FlowsComponent: React.FC = () => {
   return (
-    <div>
+    <div style={{ border: "1px solid red" }}>
       <EmployeeOnboardingFlow
         companyId="demo"
         onEvent={(evt, data) => {
@@ -13,7 +13,7 @@ const FlowsComponent: React.FC = () => {
         defaultValues={{
           profile: {
             employee: {
-              firstName: "Sarah",
+              firstName: "Jennifer",
               lastName: "Smith",
               email: "sarah.smith@example.com",
               dateOfBirth: "1990-01-01",
