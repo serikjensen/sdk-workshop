@@ -38,6 +38,7 @@ import type { MenuProps } from "./types";
 import type { CardProps } from "./types";
 import type { LinkProps } from "./types";
 import type { LocalCheckboxGroupProps, LocalRadioGroupProps } from "./types";
+import type { BreadcrumbsProps } from "./types";
 
 // Custom type for blurring to fix type compatibility issues
 type GenericBlurHandler = (e: unknown) => void;
@@ -650,6 +651,10 @@ function Card({ children, menu }: CardProps) {
   );
 }
 
+function Breadcrumbs({ crumbs }: BreadcrumbsProps) {
+  return null;
+}
+
 // Export the adapter object
 export const DemoCoAdapter = {
   Alert: MUIAlert,
@@ -669,4 +674,5 @@ export const DemoCoAdapter = {
   Badge: Badge,
   Link: Link,
   Card: Card,
+  Breadcrumbs: Breadcrumbs,
 };

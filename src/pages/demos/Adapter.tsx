@@ -1,6 +1,6 @@
 import React from "react";
 import { GustoProviderCustomUIAdapter } from "@gusto/embedded-react-sdk";
-import { EmployeeOnboardingFlow, Employee } from "@gusto/embedded-react-sdk";
+import { EmployeeOnboardingFlow } from "@gusto/embedded-react-sdk";
 import { DemoCoAdapter } from "../../adapters/DemoCoAdapter";
 
 const Adapter: React.FC = () => {

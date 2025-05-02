@@ -326,3 +326,15 @@ export interface BadgeProps
   children: ReactNode;
   status?: "success" | "warning" | "error" | "info";
 }
+
+export interface Crumb {
+  label: ReactNode;
+  isCurrent?: boolean;
+  href?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+}
+
+export interface BreadcrumbsProps {
+  crumbs: Crumb[];
+  className?: string;
+}
