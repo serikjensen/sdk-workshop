@@ -1,11 +1,11 @@
 import React from "react";
-import { EmployeeOnboardingFlow } from "@gusto/embedded-react-sdk";
+import { Employee } from "@gusto/embedded-react-sdk";
 import withGustoProvider from "../../hoc/withGustoProvider";
 
 const FlowsComponent: React.FC = () => {
   return (
     <div style={{ border: "1px solid red" }}>
-      <EmployeeOnboardingFlow
+      <Employee.OnboardingFlow
         companyId="demo"
         onEvent={(evt, data) => {
           console.log(`event from sdk: `, evt, data);

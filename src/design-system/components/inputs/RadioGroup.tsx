@@ -14,7 +14,7 @@ import { BaseComponentProps, SizeVariant } from "../types";
 
 export type RadioOption = {
   value: string;
-  label: string;
+  label: React.ReactNode;
   disabled?: boolean;
 };
 
@@ -24,7 +24,7 @@ export interface RadioGroupProps
   /**
    * The label for the radio group
    */
-  label?: string;
+  label?: React.ReactNode;
 
   /**
    * The size of the radio buttons

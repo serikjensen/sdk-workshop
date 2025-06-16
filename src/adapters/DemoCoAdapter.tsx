@@ -12,6 +12,20 @@ import {
   CircularProgress,
   Link as MuiLink,
   type AutocompleteRenderInputParams,
+  Typography,
+  List,
+  ListItem,
+  Pagination,
+  Select,
+  MenuItem,
+  Box,
+  Table as MuiTable,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
 import {
   Button,
@@ -23,22 +37,33 @@ import {
   Menu as DSMenu,
   MenuItem as DSMenuItem,
 } from "../design-system";
-import type { TextInputProps } from "./types";
-import type { NumberInputProps } from "./types";
-import type { ComboBoxProps } from "./types";
-import type { CheckboxProps } from "./types";
-import type { DatePickerProps } from "./types";
-import type { RadioProps } from "./types";
-import type { SelectProps } from "./types";
-import type { SwitchProps } from "./types";
-import type { ButtonIconProps, ButtonProps } from "./types";
-import type { AlertProps } from "./types";
-import type { BadgeProps } from "./types";
-import type { MenuProps } from "./types";
-import type { CardProps } from "./types";
-import type { LinkProps } from "./types";
-import type { LocalCheckboxGroupProps, LocalRadioGroupProps } from "./types";
-import type { BreadcrumbsProps } from "./types";
+import type {
+  TableProps,
+  TextInputProps,
+  NumberInputProps,
+  ComboBoxProps,
+  DatePickerProps,
+  RadioProps,
+  SelectProps,
+  SwitchProps,
+  AlertProps,
+  BadgeProps,
+  MenuProps,
+  CardProps,
+  LinkProps,
+  ButtonProps,
+  ButtonIconProps,
+  CheckboxProps,
+  CheckboxGroupProps,
+  RadioGroupProps,
+  OrderedListProps,
+  UnorderedListProps,
+  HeadingProps,
+  PaginationControlProps,
+  TextProps,
+  CalendarPreviewProps,
+} from "@gusto/embedded-react-sdk";
+import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 
 // Custom type for blurring to fix type compatibility issues
 type GenericBlurHandler = (e: unknown) => void;
@@ -76,6 +101,8 @@ function MUIButton({
   onFocus,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onBlur,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ref,
   ...props
 }: ButtonProps) {
   // Map variant from our API to MUI
@@ -113,6 +140,8 @@ function MUIButtonIcon({
   onFocus,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onBlur,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ref,
   "aria-label": ariaLabel,
   ...props
 }: ButtonIconProps) {
@@ -155,7 +184,7 @@ function MUITextInput({
     <DSTextField
       id={inputId}
       name={name}
-      inputRef={inputRef}
+      inputRef={inputRef as React.Ref<HTMLInputElement> | undefined}
       value={value || ""}
       placeholder={placeholder}
       disabled={isDisabled}
@@ -202,7 +231,7 @@ function MUINumberInput({
     <DSTextField
       id={inputId}
       name={name}
-      inputRef={inputRef}
+      inputRef={inputRef as React.Ref<HTMLInputElement> | undefined}
       value={value !== undefined ? value.toString() : ""}
       placeholder={placeholder}
       disabled={isDisabled}
@@ -258,7 +287,13 @@ function MUICheckbox({
         }
       }}
       onBlur={onBlur as GenericBlurHandler}
-      inputRef={inputRef}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      inputRef={inputRef as React.Ref<any>}
+      slotProps={{
+        input: {
+          ref: inputRef as React.Ref<HTMLInputElement> | undefined,
+        },
+      }}
       disabled={isDisabled}
       error={isInvalid}
       helperText={isInvalid ? errorMessage : undefined}
@@ -281,7 +316,7 @@ function MUICheckboxGroup({
   value = [],
   options,
   onChange,
-}: LocalCheckboxGroupProps) {
+}: CheckboxGroupProps) {
   // Using FormControl from MUI since we don't have a CheckboxGroup in design system
   return (
     <FormControl error={isInvalid} required={isRequired}>
@@ -365,7 +400,7 @@ function MUIComboBox({
           name={name}
           label={label}
           placeholder={placeholder}
-          inputRef={inputRef}
+          inputRef={inputRef as React.Ref<HTMLInputElement> | undefined}
           onBlur={onBlur as GenericBlurHandler}
           {...props}
         />
@@ -374,25 +409,18 @@ function MUIComboBox({
   );
 }
 
-// HTML DatePicker adapter component (simple implementation)
+// MUI DatePicker adapter component using @mui/x-date-pickers
 function MUIDatePicker({
   label,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   description,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   errorMessage,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isRequired,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isDisabled,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isInvalid,
   id,
   name,
   value,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   placeholder,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onChange,
   onBlur,
   inputRef,
@@ -400,23 +428,26 @@ function MUIDatePicker({
 }: DatePickerProps) {
   const inputId = id || `date-picker-${name}`;
 
-  // Format date for HTML input if available
-  const dateValue = value ? value.toISOString().split("T")[0] : "";
-
   return (
-    <DSTextField
-      sx={{
-        width: "100%",
-      }}
-      id={inputId}
-      name={name}
-      type="date"
-      value={dateValue}
-      onChange={() => {}}
-      inputRef={inputRef}
-      onBlur={onBlur as GenericBlurHandler}
+    <MuiDatePicker
       label={label}
-      {...props}
+      value={value || null}
+      onChange={onChange}
+      disabled={isDisabled}
+      slotProps={{
+        textField: {
+          id: inputId,
+          name,
+          inputRef: inputRef as React.Ref<HTMLInputElement> | undefined,
+          error: isInvalid,
+          helperText: isInvalid ? errorMessage : description,
+          required: isRequired,
+          placeholder,
+          onBlur: onBlur as GenericBlurHandler,
+          sx: { width: "100%" },
+          ...props,
+        },
+      }}
     />
   );
 }
@@ -454,7 +485,7 @@ function MUIRadio({
               }
             }}
             onBlur={onBlur as GenericBlurHandler}
-            inputRef={inputRef}
+            inputRef={inputRef as React.Ref<HTMLInputElement> | undefined}
             disabled={isDisabled}
             {...props}
           />
@@ -478,7 +509,7 @@ function MUIRadioGroup({
   value = "",
   options,
   onChange,
-}: LocalRadioGroupProps) {
+}: RadioGroupProps) {
   return (
     <DSRadioGroup
       label={label}
@@ -536,7 +567,7 @@ function MUISelect({
         }
       }}
       onBlur={onBlur as GenericBlurHandler}
-      inputRef={inputRef}
+      inputRef={inputRef as React.Ref<HTMLInputElement> | undefined}
       options={options}
       disabled={isDisabled}
       required={isRequired}
@@ -578,7 +609,7 @@ function MUISwitch({
               }
             }}
             onBlur={onBlur as GenericBlurHandler}
-            inputRef={inputRef}
+            inputRef={inputRef as React.Ref<HTMLInputElement> | undefined}
             disabled={isDisabled}
             {...props}
           />
@@ -651,8 +682,243 @@ function Card({ children, menu }: CardProps) {
   );
 }
 
-function Breadcrumbs({ crumbs }: BreadcrumbsProps) {
+function Breadcrumbs() {
   return null;
+}
+
+// Add these type definitions before the Table component
+interface TableData {
+  key: string;
+  content: React.ReactNode;
+}
+
+interface TableRow {
+  key: string;
+  data: TableData[];
+}
+
+// Update the Table component with MUI components
+function Table({
+  headers,
+  rows,
+  className,
+  "aria-label": ariaLabel,
+  emptyState,
+  ...props
+}: TableProps) {
+  return (
+    <TableContainer component={Paper} className={className}>
+      <MuiTable aria-label={ariaLabel} {...props}>
+        <TableHead>
+          <TableRow>
+            {headers?.map((header: TableData) => (
+              <TableCell key={header.key}>{header.content}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows?.length === 0 && emptyState ? (
+            <TableRow>
+              <TableCell colSpan={headers?.length} align="center">
+                {emptyState}
+              </TableCell>
+            </TableRow>
+          ) : (
+            rows?.map((row: TableRow) => (
+              <TableRow key={row.key}>
+                {row.data.map((cell: TableData) => (
+                  <TableCell key={cell.key}>{cell.content}</TableCell>
+                ))}
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </MuiTable>
+    </TableContainer>
+  );
+}
+
+// OrderedList adapter component
+function MUIOrderedList({ items, className, ...props }: OrderedListProps) {
+  return (
+    <List
+      component="ol"
+      className={`list ordered-list ${className || ""}`}
+      {...props}
+    >
+      {items.map((item, index) => (
+        <ListItem key={index} className="list-item">
+          {item}
+        </ListItem>
+      ))}
+    </List>
+  );
+}
+
+// UnorderedList adapter component
+function MUIUnorderedList({ items, className, ...props }: UnorderedListProps) {
+  return (
+    <List
+      component="ul"
+      className={`list unordered-list ${className || ""}`}
+      {...props}
+    >
+      {items.map((item, index) => (
+        <ListItem key={index} className="list-item">
+          {item}
+        </ListItem>
+      ))}
+    </List>
+  );
+}
+
+// Heading adapter component
+function MUIHeading({
+  as: Component,
+  styledAs,
+  textAlign,
+  children,
+}: HeadingProps) {
+  const levelStyles = styledAs ?? Component;
+
+  const fontSizes = {
+    h1: "2rem",
+    h2: "1.5rem",
+    h3: "1.25rem",
+    h4: "1rem",
+    h5: "0.875rem",
+    h6: "0.75rem",
+  };
+
+  const headingStyles = {
+    textAlign: textAlign,
+    fontSize: fontSizes[levelStyles],
+  };
+
+  return (
+    <Typography component={Component} style={headingStyles}>
+      {children}
+    </Typography>
+  );
+}
+
+// PaginationControl adapter component
+function MUIPaginationControl({
+  currentPage,
+  totalPages,
+  handleFirstPage,
+  handlePreviousPage,
+  handleNextPage,
+  handleLastPage,
+  handleItemsPerPageChange,
+}: PaginationControlProps) {
+  if (totalPages < 2) {
+    return null;
+  }
+
+  return (
+    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <FormControl size="small" sx={{ minWidth: 120 }}>
+        <Select
+          defaultValue="5"
+          onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+          size="small"
+        >
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={50}>50</MenuItem>
+        </Select>
+      </FormControl>
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={(_, page) => {
+          if (page === 1) handleFirstPage();
+          else if (page === totalPages) handleLastPage();
+          else if (page > currentPage) handleNextPage();
+          else if (page < currentPage) handlePreviousPage();
+        }}
+        showFirstButton
+        showLastButton
+      />
+    </Box>
+  );
+}
+
+// Text adapter component
+function MUIText({
+  as: Component,
+  size = "md",
+  textAlign,
+  weight,
+  className,
+  children,
+}: TextProps) {
+  const fontSizes = {
+    xs: "0.75rem",
+    sm: "0.875rem",
+    md: "1rem",
+    lg: "1.125rem",
+    xl: "1.25rem",
+  };
+
+  const fontWeights = {
+    regular: "400",
+    medium: "500",
+    semibold: "600",
+    bold: "700",
+  };
+
+  const textStyles = {
+    margin: 0,
+    fontSize: fontSizes[size],
+    lineHeight: "1.5",
+    textAlign: textAlign,
+    fontWeight: weight ? fontWeights[weight] : fontWeights.regular,
+  };
+
+  return (
+    <Typography component={Component} style={textStyles} className={className}>
+      {children}
+    </Typography>
+  );
+}
+
+// CalendarPreview adapter component
+function MUICalendarPreview({
+  dateRange,
+  highlightDates,
+}: CalendarPreviewProps) {
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  return (
+    <Box>
+      <Typography variant="subtitle1">
+        <strong>{dateRange.label}:</strong>
+      </Typography>
+      <Typography variant="body1">
+        {formatDate(dateRange.start)} - {formatDate(dateRange.end)}
+      </Typography>
+
+      {highlightDates && highlightDates.length > 0 && (
+        <List>
+          {highlightDates.map((highlight, index) => (
+            <ListItem key={index}>
+              <Typography variant="body2">
+                {formatDate(highlight.date)} - {highlight.label}
+              </Typography>
+            </ListItem>
+          ))}
+        </List>
+      )}
+    </Box>
+  );
 }
 
 // Export the adapter object
@@ -675,4 +941,11 @@ export const DemoCoAdapter = {
   Link: Link,
   Card: Card,
   Breadcrumbs: Breadcrumbs,
+  Table: Table,
+  OrderedList: MUIOrderedList,
+  UnorderedList: MUIUnorderedList,
+  Heading: MUIHeading,
+  PaginationControl: MUIPaginationControl,
+  Text: MUIText,
+  CalendarPreview: MUICalendarPreview,
 };

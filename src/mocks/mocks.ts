@@ -74,6 +74,9 @@ import type { EmployeeFederalTax$Outbound } from "@gusto/embedded-api/models/com
 import type { GetV1EmployeesEmployeeIdStateTaxesRequest } from "@gusto/embedded-api/models/operations/getv1employeesemployeeidstatetaxes";
 import type { PutV1EmployeesEmployeeIdStateTaxesRequestBody } from "@gusto/embedded-api/models/operations/putv1employeesemployeeidstatetaxes";
 import type { EmployeeStateTax$Outbound } from "@gusto/embedded-api/models/components/employeestatetax";
+import type { GetV1CompaniesCompanyIdFederalTaxDetailsRequest } from "@gusto/embedded-api/models/operations/getv1companiescompanyidfederaltaxdetails";
+import type { PutV1CompaniesCompanyIdFederalTaxDetailsRequestBody } from "@gusto/embedded-api/models/operations/putv1companiescompanyidfederaltaxdetails";
+import type { FederalTaxDetails$Outbound } from "@gusto/embedded-api/models/components/federaltaxdetails";
 import { getFixture } from "./fixtures/getFixture";
 
 const API_BASE_URL = "https://sdkdemo.gusto.com";
@@ -497,10 +500,11 @@ export const deleteEmployeeWorkAddress = http.delete<
 
 export const getCompany = http.get(
   `${API_BASE_URL}/v1/companies/:company_id`,
-  ({ params }) =>
-    HttpResponse.json({
+  ({ params }) => {
+    return HttpResponse.json({
       uuid: params.company_id,
-    })
+    });
+  }
 );
 
 export function handleGetCompanyEmployees(
@@ -596,6 +600,7 @@ export const getEmployee = http.get<
   // Since we don't have fixtures available yet, return a mock response
   return HttpResponse.json({
     uuid: ":employee_id",
+    company_uuid: "a007e1ab-3595-43c2-ab4b-af7a5af2e365",
     first_name: "Employee",
     last_name: "Name",
     onboarding_status: "onboarding_completed",
@@ -784,6 +789,48 @@ export const getEmployeeGarnishments = http.get(
   () => HttpResponse.json([])
 );
 
+export function handleGetCompanyFederalTaxes(
+  resolver: HttpResponseResolver<
+    PathParams,
+    GetV1CompaniesCompanyIdFederalTaxDetailsRequest,
+    FederalTaxDetails$Outbound
+  >
+) {
+  return http.get(
+    `${API_BASE_URL}/v1/companies/:company_id/federal_tax_details`,
+    resolver
+  );
+}
+
+export const getCompanyFederalTaxes = handleGetCompanyFederalTaxes(async () => {
+  const responseFixture = await getFixture(
+    "get-v1-companies-company_id-federal_tax_details"
+  );
+  return HttpResponse.json(responseFixture);
+});
+
+export function handleUpdateCompanyFederalTaxes(
+  resolver: HttpResponseResolver<
+    PathParams,
+    PutV1CompaniesCompanyIdFederalTaxDetailsRequestBody,
+    FederalTaxDetails$Outbound
+  >
+) {
+  return http.put(
+    `${API_BASE_URL}/v1/companies/:company_id/federal_tax_details`,
+    resolver
+  );
+}
+
+export const updateCompanyFederalTaxes = handleUpdateCompanyFederalTaxes(
+  async (overrides: object | undefined) => {
+    const responseFixture = await getFixture(
+      "get-v1-companies-company_id-federal_tax_details"
+    );
+    return HttpResponse.json({ ...responseFixture, ...overrides });
+  }
+);
+
 export const mockHandlers = [
   getCompanyEmployees(),
   getEmployee,
@@ -832,6 +879,8 @@ export const mockHandlers = [
   updateEmptyEmployeePaymentMethod,
   getEmployeeStateTaxes,
   updateEmployeeStateTaxes,
+  getCompanyFederalTaxes,
+  updateCompanyFederalTaxes,
 ];
 
 export const worker = setupWorker(...mockHandlers);

@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  EmployeeOnboardingFlow,
-  GustoProvider,
-} from "@gusto/embedded-react-sdk";
+import { Employee, GustoProvider } from "@gusto/embedded-react-sdk";
 import { theme as demoCoTheme } from "../../design-system";
 
 // Define the ThemeColor type to match what the SDK expects
@@ -30,7 +27,7 @@ const Theming: React.FC = () => {
         rootFS: "16",
         colors: {
           gray: {
-            100: "#fff" as ThemeColor,
+            100: "red" as ThemeColor,
             200: demoCoTheme.palette.grey[200] as ThemeColor,
             300: demoCoTheme.palette.grey[300] as ThemeColor,
             400: demoCoTheme.palette.grey[400] as ThemeColor,
@@ -161,7 +158,7 @@ const Theming: React.FC = () => {
         },
       }}
     >
-      <EmployeeOnboardingFlow
+      <Employee.OnboardingFlow
         companyId="demo"
         onEvent={(eventType, eventData) => {
           console.log(eventType, eventData);

@@ -240,37 +240,27 @@ const DashboardComponent: React.FC = () => {
             ))}
           </List>
         </Paper>
-
-        <Box
+        <Paper
+          elevation={0}
           sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            gap: 3,
-            mb: 4,
+            flex: 2,
+            p: 3,
+            border: "1px solid",
+            borderColor: "divider",
+            height: "100%",
           }}
         >
-          <Paper
-            elevation={0}
-            sx={{
-              flex: 2,
-              p: 3,
-              border: "1px solid",
-              borderColor: "divider",
-              height: "100%",
+          <Employee.EmployeeList
+            companyId="demo"
+            onEvent={(evt, data) => {
+              console.log("Employee Onboarding Event:", evt, data);
             }}
           >
-            <Employee.EmployeeList
-              companyId="demo"
-              onEvent={(evt, data) => {
-                console.log("Employee Onboarding Event:", evt, data);
-              }}
-            >
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <Employee.EmployeeList.List />
-              </Box>
-            </Employee.EmployeeList>
-          </Paper>
-        </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <Employee.EmployeeList.List />
+            </Box>
+          </Employee.EmployeeList>
+        </Paper>
 
         <Paper
           elevation={0}
